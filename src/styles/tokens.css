@@ -1,0 +1,16 @@
+:root {
+  color-scheme: light;
+  --bg-canvas: #dce0e2;
+  --bg-card: #ffffff;
+  --bg-input: #f0f5ff;
+  --border-subtle: #dce6f5;
+  --border-focus: #3184ee;
+  --text-primary: #17202c;
+  --text-muted: #667080;
+  --accent-green: #2877dc;
+  --accent-blue: #3184ee;
+  --accent-blue-hover: #196bd4;
+  --radius-card: 20px;
+  --radius-input: 14px;
+  --radius-chip: 12px;
+}

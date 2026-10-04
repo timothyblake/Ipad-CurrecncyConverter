@@ -1,0 +1,21 @@
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/inter/latin-700.css';
+@import '@fontsource/josefin-sans/latin-700.css';
+@import './tokens.css';
+* {box-sizing:border-box;}
+body {margin:0;background:var(--bg-canvas);color:var(--text-primary);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+h1,h2,h3 {font-family:'Josefin Sans',sans-serif;font-weight:700;}
+button,input,select {font:inherit;}
+button,select {touch-action:manipulation;}
+button {cursor:pointer;}
+button:disabled {cursor:wait;opacity:0.6;}
+a {color:inherit;text-underline-offset:4px;}
+:focus-visible {outline:3px solid var(--border-focus);outline-offset:4px;}
+.app-shell {max-width:1080px;margin:32px auto;padding:24px 36px 16px;background:#f6f6f5;border:1px solid #ffffff;border-radius:28px;box-shadow:0 12px 48px #27344b08;}
+.app-footer {display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center;color:var(--text-muted);font-size:12px;margin-top:20px;}
+.app-footer__link {min-height:64px;display:inline-flex;align-items:center;}
+@media(min-width:601px) and (max-width:1140px){.app-shell{margin:24px;}}
+@media(max-width:600px){.app-shell{padding:16px 16px 12px;margin:12px;border-radius:22px}.app-footer{gap:0;justify-content:center;text-align:center}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;}}
