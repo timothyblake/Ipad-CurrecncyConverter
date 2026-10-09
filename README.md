@@ -1,6 +1,6 @@
 # Currency Converter
 
-An iPad-first Astro + Vue 3 travel utility for JMD, GBP, USD and EUR. Component-scoped BEM CSS, self-hosted Josefin Sans headings paired with Inter for text and amounts, and no CSS framework.
+An iPad-first Astro + Vue 3 travel utility for JMD, GBP, USD and EUR. Component-scoped BEM CSS, self-hosted Inter for text and JetBrains Mono for amounts, and no CSS framework. The layout follows the iPad design: three columns (source · switch · target) in landscape, stacked rows with a divider switch in portrait, and a single column on phones.
 
 ## Run locally
 
@@ -37,4 +37,4 @@ Use the [Cloudflare Astro deployment guide](https://developers.cloudflare.com/pa
 
 ## Verification
 
-`npm test` covers arithmetic, malformed input, cache validation, API failure, offline rates and blocked storage. `npm run build` includes Astro/Vue type checking. The automated browser suite (`QA_URL=http://localhost:4321 node scripts/browser-qa.mjs`, after starting a production preview; install Chromium with `npx playwright install chromium`) covers source/target selection, switch, amount editing, long amounts, offline reload and refresh failure at 810×1080, 834×1194, 1080×810, 1194×834 and 390×844. Set `QA_URL` to the actual local preview URL. Physical iPad Safari keyboard and Home Screen behavior should also be checked on a device.
+`npm test` covers arithmetic, malformed input, cache validation, API failure, offline rates and blocked storage. `npm run build` includes Astro/Vue type checking. The automated browser suite (`QA_URL=http://localhost:4321 node scripts/browser-qa.mjs`, after starting a production preview; install Chromium with `npx playwright install chromium`) covers source/target selection, switch, amount editing, long amounts, offline mode, reconnection and refresh failure at 810×1080, 834×1194, 1080×810, 1194×834 and 390×844. Set `QA_URL` to the actual local preview URL. Playwright's offline emulation also blocks service-worker cache responses on reload, so check offline reload by stopping the preview server after a first visit and reloading. Physical iPad Safari keyboard and Home Screen behavior should also be checked on a device.

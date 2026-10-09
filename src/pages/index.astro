@@ -1,13 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
 import ConverterCard from '../components/vue/ConverterCard.vue';
 ---
 <Layout>
-  <main class="app-shell">
-    <Header />
-    <ConverterCard client:load />
-    <noscript><p>Enable JavaScript to calculate amounts and save exchange rates for offline use.</p></noscript>
-    <footer class="app-footer"><span>Made for the journey. &nbsp; Jamaica · United Kingdom · US · Europe</span><a class="app-footer__link" href="https://www.exchangerate-api.com" rel="noreferrer">Rates by Exchange Rate API ↗</a></footer>
-  </main>
+  <ConverterCard client:load />
+  <noscript><p class="noscript">Enable JavaScript to calculate amounts and save exchange rates for offline use.</p></noscript>
 </Layout>
+<style>
+.noscript {text-align:center;color:var(--text-muted);padding:0 16px 32px;}
+</style>

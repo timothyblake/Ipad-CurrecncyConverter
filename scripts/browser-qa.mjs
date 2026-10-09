@@ -10,7 +10,7 @@ const baseURL = process.env.QA_URL ?? 'http://127.0.0.1:4387';
 const response = {result:'success',base_code:'GBP',time_last_update_unix:Math.floor(Date.now()/1000),rates:{GBP:1,JMD:204.5,USD:1.31,EUR:1.18}};
 await page.route('https://open.er-api.com/**',route=>route.fulfill({json:response}));
 await page.goto(baseURL);
-await page.getByText('Rates up to date',{exact:true}).waitFor();
+await page.getByText(/^Rates updated .* cached for offline use$/).waitFor();
 assert.match(await page.locator('#converted-amount').innerText(),/4.89/);
 for (const name of ['US Dollar', 'Euro', 'Jamaican Dollar']) {
   const card = page.getByRole('button', { name: `Use ${name} as input currency`, exact: true });
@@ -26,7 +26,7 @@ await page.getByLabel('Amount in US Dollar').waitFor();
 await page.getByRole('button', { name: 'Switch conversion direction' }).click();
 await page.reload();
 await page.getByLabel('Amount in British Pound').waitFor();
-await page.evaluate(() => sessionStorage.setItem('currency_input_currency', 'INVALID'));
+await page.evaluate(() => { sessionStorage.setItem('currency_input_currency', 'INVALID'); sessionStorage.setItem('currency_foreign_currency', 'INVALID'); });
 await page.reload();
 await page.getByLabel('Amount in Jamaican Dollar').waitFor();
 await page.locator('#source-amount').fill('5000');
@@ -59,19 +59,20 @@ for (const [width,height] of [[1194,834],[1080,810],[834,1194],[810,1080],[390,8
 }
 await page.evaluate(()=>navigator.serviceWorker.ready);
 await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
+// Playwright's offline emulation also blocks service-worker cache responses on reload, so go offline in place.
+// Offline reload is verified by stopping the preview server (see README).
 await context.setOffline(true);
-await page.reload();
 await page.getByText('Offline rates',{exact:true}).waitFor({timeout:10000}).catch(async error=>{console.log(await page.locator('body').innerText());console.log(errors);console.log(await page.evaluate(()=>({online:navigator.onLine,cache:localStorage.getItem('currency_rates_cache')})));throw error;});
 assert.match(await page.locator('#converted-amount').innerText(),/4.89/);
 await page.locator('#source-amount').fill('5000');
 assert.match(await page.locator('#converted-amount').innerText(),/24.45/);
 await context.setOffline(false);
-await page.getByText('Rates up to date',{exact:true}).waitFor();
+await page.getByText(/^Rates updated .* cached for offline use$/).waitFor();
 await page.route('https://open.er-api.com/**',route=>route.abort());
 await page.getByRole('button',{name:'Refresh exchange rates'}).click();
 await page.getByText('Saved rates',{exact:true}).waitFor();
 assert.ok(errors.length===0,errors.join('\n'));
-console.log('PASS: conversions, selections, switch, amount editing, validation, 5 viewports, 64px touch controls, large amounts, offline reload, reconnection, API failure, no browser errors.');
+console.log('PASS: conversions, selections, switch, amount editing, validation, 5 viewports, 64px touch controls, large amounts, offline mode, reconnection, API failure, no browser errors.');
 await context.close();
 const fallbackContext=await browser.newContext();
 const fallbackPage=await fallbackContext.newPage();

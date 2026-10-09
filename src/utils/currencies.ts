@@ -1,14 +1,14 @@
 export const currencies = {
-  JMD: { name: 'Jamaican Dollar', symbol: 'J$', flag: '🇯🇲' },
-  GBP: { name: 'British Pound', symbol: '£', flag: '🇬🇧' },
-  USD: { name: 'US Dollar', symbol: '$', flag: '🇺🇸' },
-  EUR: { name: 'Euro', symbol: '€', flag: '🇪🇺' },
+  JMD: { name: 'Jamaican Dollar', plural: 'Jamaican Dollars', symbol: 'J$', flag: '🇯🇲' },
+  GBP: { name: 'British Pound', plural: 'British Pounds', symbol: '£', flag: '🇬🇧' },
+  USD: { name: 'US Dollar', plural: 'US Dollars', symbol: '$', flag: '🇺🇸' },
+  EUR: { name: 'Euro', plural: 'Euros', symbol: '€', flag: '🇪🇺' },
 } as const;
 export type Currency = keyof typeof currencies;
 export type ForeignCurrency = Exclude<Currency, 'GBP'>;
 export type Rates = Record<Currency, number>;
-export const foreignCurrencies: ForeignCurrency[] = ['JMD', 'EUR', 'USD'];
-export const allCurrencies: Currency[] = ['JMD', 'GBP', 'EUR', 'USD'];
+export const foreignCurrencies: ForeignCurrency[] = ['JMD', 'USD', 'EUR'];
+export const allCurrencies: Currency[] = ['GBP', 'JMD', 'USD', 'EUR'];
 export function parseAmount(value: string): number | null {
   if (value.trim() === '') return 0;
   // Accept ungrouped decimals or correctly grouped en-GB amounts; never silently strip invalid characters.
